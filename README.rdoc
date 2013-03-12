@@ -1,6 +1,10 @@
-= gritano-sshconfig
+= Gritano-SSHConfig
 
-Description goes here.
+Everytime that you want to configure OpenSSH you need to edit the sshd_config file... Isn't it annoying? 
+
+It was annoying. Now, you can use this gem to improve this task.
+
+Gritano-SSHConfig helps you to configure OpenSSH via command line or API. You choose!
 
 == Contributing to gritano-sshconfig
  
