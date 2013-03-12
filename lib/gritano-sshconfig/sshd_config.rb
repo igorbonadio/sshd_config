@@ -12,6 +12,7 @@ module Gritano
     def self.read(filename)
       sshd_config = SshdConfig.new(filename)
       sshd_config.load
+      return sshd_config
     end
   end
 end
