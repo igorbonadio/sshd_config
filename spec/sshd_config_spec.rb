@@ -20,7 +20,10 @@ module Gritano
       sshd_config.lines[12][:type].should be == :property
     end
     
-    it "should get parameters from sshd_config file"
+    it "should get parameters from sshd_config file" do
+      sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config'))
+      sshd_config.port.should be == "22"
+    end
     
     it "should set parameters from sshd_config file"
     it "should write a sshd_config file"
