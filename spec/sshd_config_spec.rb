@@ -7,7 +7,11 @@ module Gritano
       SshdConfig.new(File.join(File.dirname(__FILE__), 'data', 'sshd_config'))
     end
     
-    it "should read a sshd_config file"
+    it "should read a sshd_config file" do
+      File.any_instance.should_receive(:readlines)
+      sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config'))
+    end
+    
     it "should get parameters from sshd_config file"
     it "should set parameters from sshd_config file"
     it "should write a sshd_config file"
