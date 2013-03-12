@@ -8,11 +8,20 @@ module Gritano
     end
     
     it "should read a sshd_config file" do
-      File.any_instance.should_receive(:readlines)
+      File.any_instance.should_receive(:readlines).and_return([])
       SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config'))
     end
     
+    it "should have an internal representation of the sshd_config file" do
+      sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config'))
+      sshd_config.lines.length.should be == 132
+      sshd_config.lines[0][:type].should be == :comment
+      sshd_config.lines[1][:type].should be == :empty
+      sshd_config.lines[12][:type].should be == :property
+    end
+    
     it "should get parameters from sshd_config file"
+    
     it "should set parameters from sshd_config file"
     it "should write a sshd_config file"
     it "should keep original comments"

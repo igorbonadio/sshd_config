@@ -1,12 +1,25 @@
 module Gritano
   class SshdConfig
+    attr_reader :lines
+    
     def initialize(filename)
       @filename = filename
       @file = File.open(@filename, "r")
     end
     
     def load
-      @file.readlines
+      @lines = []
+      @file.readlines.each do |line|
+        @lines << {content: line, type: type(line)}
+      end
+    end
+    
+    def type(line)
+      case line[0] 
+        when '#' then :comment
+        when "\n" then :empty
+        else :property
+      end
     end
     
     def self.read(filename)
