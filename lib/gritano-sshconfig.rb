@@ -1,3 +1,3 @@
 ROOT_PATH = File.expand_path(File.dirname(__FILE__))
 
-require File.join(ROOT_PATH, '/gritano-sshdconfig/sshd_config')
+require File.join(ROOT_PATH, '/gritano-sshconfig/sshd_config')
