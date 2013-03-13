@@ -54,20 +54,26 @@ module Gritano
     
     def set_value(name, value)
       prop = @lines.select do |line| 
-        (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == (name.to_s[0..-2]).chomp.upcase)
+        (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == (name).chomp.upcase)
       end
-      new_value = change_property(prop[0][:content], value)
-      @lines.each_with_index do |line, i|
-        if line[:content] == prop[0][:content]
-          @lines[i][:content] = "#{new_value}\n"
+      if prop.length == 1
+        new_value = change_property(prop[0][:content], value)
+        @lines.each_with_index do |line, i|
+          if line[:content] == prop[0][:content]
+            @lines[i][:content] = "#{new_value}\n"
+          end
         end
+        return new_value
+      else
+        new_value = "#{name} #{value}\n"
+        @lines << {content: new_value, type: :property}
+        return new_value
       end
-      return new_value
     end
     
     def get_value(name)
       prop = @lines.select do |line| 
-        (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == name.to_s.chomp.upcase)
+        (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == name.chomp.upcase)
       end
       if prop.length == 1
         return property(prop[0][:content])[:value]
@@ -79,9 +85,9 @@ module Gritano
     def method_missing(name, *args, &block)
       return case name
         when /^.*=$/ then
-          set_value(name, args[0])
+          set_value(name.to_s[0..-2], args[0])
         else
-          get_value(name)
+          get_value(name.to_s)
       end
     end
   end

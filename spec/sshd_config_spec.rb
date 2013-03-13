@@ -36,6 +36,12 @@ module Gritano
       sshd_config.port.should be == "33"
     end
     
+    it "should set new parameters to sshd_config file" do
+      sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config'))
+      sshd_config.new_parameter = "new"
+      sshd_config.new_parameter.should be == "new"
+    end
+    
     it "should write a sshd_config file" do
       file = File.open(File.join(File.dirname(__FILE__), 'data', 'sshd_config_tmp'), "w")
       file.write(File.open(File.join(File.dirname(__FILE__), 'data', 'sshd_config')).readlines.join)
