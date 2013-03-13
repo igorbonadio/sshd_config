@@ -1,2 +1,12 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+
+require 'sshd_config'
+
+if ARGV.length < 2
+  puts "invalid arguments..."
+else
+  file, command, value = ARGV
+end
