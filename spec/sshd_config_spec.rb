@@ -44,8 +44,5 @@ module Gritano
       sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config_tmp'))
       sshd_config.port.should be == "33"
     end
-    
-    it "should keep original comments"
-    it "should write new comments"
   end
 end
