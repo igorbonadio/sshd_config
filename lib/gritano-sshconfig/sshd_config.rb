@@ -38,6 +38,20 @@ module Gritano
       ([prop[0]].concat value.split(" ")).join(" ")
     end
     
+    def save
+      @file.close
+      @file = File.open(@filename, "w")
+      @lines.each do |line|
+        @file.write(line[:content])
+      end
+      @file.close
+      @file = File.open(@filename, "r")
+    end
+    
+    def close
+      @file.close
+    end
+    
     def method_missing(name, *args, &block)
       case name
         when /^.*=$/ then
@@ -47,7 +61,7 @@ module Gritano
           new_value = change_property(prop[0][:content], args[0])
           @lines.each_with_index do |line, i|
             if line[:content] == prop[0][:content]
-              @lines[i][:content] = new_value
+              @lines[i][:content] = "#{new_value}\n"
             end
           end
           return new_value

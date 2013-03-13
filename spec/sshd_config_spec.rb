@@ -31,7 +31,20 @@ module Gritano
       sshd_config.port.should be == "33"
     end
     
-    it "should write a sshd_config file"
+    it "should write a sshd_config file" do
+      file = File.open(File.join(File.dirname(__FILE__), 'data', 'sshd_config_tmp'), "w")
+      file.write(File.open(File.join(File.dirname(__FILE__), 'data', 'sshd_config')).readlines.join)
+      file.close
+        
+      sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config_tmp'))
+      sshd_config.port = "33"
+      sshd_config.save
+      sshd_config.close
+      
+      sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config_tmp'))
+      sshd_config.port.should be == "33"
+    end
+    
     it "should keep original comments"
     it "should write new comments"
   end
