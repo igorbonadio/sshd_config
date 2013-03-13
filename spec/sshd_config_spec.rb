@@ -25,7 +25,12 @@ module Gritano
       sshd_config.port.should be == "22"
     end
     
-    it "should set parameters from sshd_config file"
+    it "should set parameters from sshd_config file" do
+      sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config'))
+      sshd_config.port = "33"
+      sshd_config.port.should be == "33"
+    end
+    
     it "should write a sshd_config file"
     it "should keep original comments"
     it "should write new comments"
