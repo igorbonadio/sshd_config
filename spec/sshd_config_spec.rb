@@ -25,6 +25,11 @@ module Gritano
       sshd_config.port.should be == "22"
     end
     
+    it "should raise an error if the parameter doesn't exist and you try to get it" do
+      sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config'))
+      lambda { sshd_config.invalid_parameter }.should raise_error NoMethodError
+    end
+    
     it "should set parameters from sshd_config file" do
       sshd_config = SshdConfig.read(File.join(File.dirname(__FILE__), 'data', 'sshd_config'))
       sshd_config.port = "33"

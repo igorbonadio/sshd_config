@@ -69,17 +69,20 @@ module Gritano
       prop = @lines.select do |line| 
         (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == name.to_s.chomp.upcase)
       end
-      return property(prop[0][:content])[:value] if prop.length == 1
+      if prop.length == 1
+        return property(prop[0][:content])[:value]
+      else
+        raise NoMethodError
+      end
     end
     
     def method_missing(name, *args, &block)
-      case name
+      return case name
         when /^.*=$/ then
-          return set_value(name, args[0])
+          set_value(name, args[0])
         else
-          return get_value(name)
+          get_value(name)
       end
-      raise NoMethodError
     end
   end
 end
