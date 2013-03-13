@@ -52,19 +52,23 @@ module Gritano
       @file.close
     end
     
+    def set_value(name, value)
+      prop = @lines.select do |line| 
+        (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == (name.to_s[0..-2]).chomp.upcase)
+      end
+      new_value = change_property(prop[0][:content], value)
+      @lines.each_with_index do |line, i|
+        if line[:content] == prop[0][:content]
+          @lines[i][:content] = "#{new_value}\n"
+        end
+      end
+      return new_value
+    end
+    
     def method_missing(name, *args, &block)
       case name
         when /^.*=$/ then
-          prop = @lines.select do |line| 
-            (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == (name.to_s[0..-2]).chomp.upcase)
-          end
-          new_value = change_property(prop[0][:content], args[0])
-          @lines.each_with_index do |line, i|
-            if line[:content] == prop[0][:content]
-              @lines[i][:content] = "#{new_value}\n"
-            end
-          end
-          return new_value
+          return set_value(name, args[0])
         else
           prop = @lines.select do |line| 
             (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == name.to_s.chomp.upcase)
