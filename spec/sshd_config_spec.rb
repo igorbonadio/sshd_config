@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
-module Gritano
+module SshdConfig
   describe "SshdConfig" do
     it "should open a sshd_config file" do
       File.should_receive(:open).with(File.join(File.dirname(__FILE__), 'data', 'sshd_config'), "r")

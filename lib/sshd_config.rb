@@ -1,4 +1,4 @@
-module Gritano
+module SshdConfig
   class SshdConfig
     attr_reader :lines
     

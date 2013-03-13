@@ -5,8 +5,34 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'sshd_config'
 
+def help
+  "
+  sshd_config file command [value]
+  
+  Examples:
+  
+  sshd_config /etc/sshd_config set:port 22
+  sshd_config /etc/sshd_config get:port
+  
+  "
+end
+
+puts help if ARGV[0] == "help"
+
 if ARGV.length < 2
   puts "invalid arguments..."
 else
   file, command, value = ARGV
+  sshd_config = SshdConfig::SshdConfig.read(file)
+  case command
+    when /^get:/ then
+      puts sshd_config.send(command.gsub(/^get:/, ''))
+    when /^set:/ then
+      begin
+        sshd_config.send("#{command.gsub(/^set:/, '')}=", value)
+        sshd_config.save
+      rescue
+        puts "error..."
+      end
+  end
 end
