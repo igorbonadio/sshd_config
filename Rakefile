@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "sshd_config"
   gem.homepage = "http://github.com/igorbonadio/sshd_config"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Configure OpenSSH using an awesome API}
+  gem.description = %Q{SSHDConfig helps you to configure OpenSSH via command line or API}
   gem.email = "igorbonadio@gmail.com"
   gem.authors = ["Igor Bonadio"]
   # dependencies defined in Gemfile
