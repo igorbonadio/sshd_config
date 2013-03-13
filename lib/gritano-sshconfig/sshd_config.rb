@@ -33,10 +33,24 @@ module Gritano
       return {name: content[0], value: content[1..-1].join(' ')}
     end
     
+    def change_property(prop, value)
+      prop = prop.gsub("\n", "").split(" ")
+      ([prop[0]].concat value.split(" ")).join(" ")
+    end
+    
     def method_missing(name, *args, &block)
       case name
         when /^.*=$/ then
-          return 0
+          prop = @lines.select do |line| 
+            (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == (name.to_s[0..-2]).chomp.upcase)
+          end
+          new_value = change_property(prop[0][:content], args[0])
+          @lines.each_with_index do |line, i|
+            if line[:content] == prop[0][:content]
+              @lines[i][:content] = new_value
+            end
+          end
+          return new_value
         else
           prop = @lines.select do |line| 
             (line[:type] == :property) and (property(line[:content])[:name].chomp.upcase == name.to_s.chomp.upcase)
