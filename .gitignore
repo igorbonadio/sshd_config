@@ -47,3 +47,6 @@ pkg
 
 # For rubinius:
 #*.rbc
+
+# temp files
+sshd_config_tmp
