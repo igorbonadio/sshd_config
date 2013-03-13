@@ -6,6 +6,20 @@ It was annoying. Now, you can use this gem to improve this task.
 
 SSHDConfig helps you to configure OpenSSH via command line or API. You choose!
 
+== Install
+
+  $ gem install sshd_config
+
+== Usage
+
+To get a property:
+
+  sshd_config /etc/sshd_config get:port
+  
+To set a property:
+
+  sshd_config /etc/sshd_config set:port 2222
+
 == Contributing to gritano-sshconfig
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
